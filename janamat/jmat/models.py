@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import *
+from django.utils.timezone import now
 
 
 USER_TYPE = (
@@ -27,6 +28,7 @@ class UserProfile(models.Model):
 
 
 class Chellenge(models.Model):
+
     chellengeName = models.CharField(max_length=50, blank=False, null=False)
     chellengeDesc = models.TextField(max_length=1000, blank=True, null=True)
     # topiclist = models.ForeignKey(TopicList, on_delete=models.CASCADE)
@@ -53,18 +55,17 @@ class TopicList(models.Model):
 
 
 class Comment(models.Model):
-    # id
+    sno = models.AutoField(primary_key=True)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    updated_by = models.ForeignKey(
-        User, on_delete=models.SET_NULL, related_name="Comment_updated_by", null=True)
-
-    chellenge_id = models.ForeignKey(Chellenge, on_delete=models.CASCADE)
+    message = models.TextField()
+    chellenge_id = models.ForeignKey(
+        Chellenge,  on_delete=models.CASCADE)
     # This one works exact time of current location
-    date_comment = models.DateTimeField(default=datetime.today)
-    message = models.TextField('Message Field')
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
+    date_comment = models.DateTimeField(default=now)
 
     def __str__(self):
-        return str(self.user_id) + '    :   ' + str(self.chellenge_id) + '    :   ' + self.message
+        return str(self.user_id) + '    :   ' + str(self.chellenge_id) + '    :   ' + self.message[0:10]+'...'
 
     class Meta:
         db_table = "Comment"
@@ -96,3 +97,20 @@ class testMOdel(models.Model):
 
     class Meta:
         db_table = "Test_MOdel"
+
+
+class contact_us(models.Model):
+
+    email = models.EmailField(max_length=50, blank=False, null=False)
+    message = models.TextField(max_length=1000, blank=True, null=False)
+    date = models.DateTimeField(default=now)
+    # topiclist = models.ForeignKey(TopicList, on_delete=models.CASCADE)
+
+    def __str__(self):
+        # You will get the list with the Challenge name
+        return self.email + '    :   ' + self.message[0:20]+'.......'
+
+    class Meta:
+        db_table = "Contact"
+        verbose_name = 'Contact'
+        verbose_name_plural = 'Contacts'

@@ -8784,9 +8784,10 @@ button.bg-dark:focus {
 .py-5 {
   padding-top: 1rem !important;
   position: fixed;
-  /* margin-left: 20px; */
+  margin-left: 10px;
   height: 80%;
-  border: 2px solid #3e383863;
+  overflow-x: hidden;
+  /* border: 2px solid #3e383863; */
   overflow-y: scroll;
   margin-top: 80px;
 }
@@ -10760,7 +10761,7 @@ h5,
 #sidebar {
   min-width: 250px;
   max-width: 300px;
-  background: #5081ab;
+  background: #5081abd9;
   color: #fff;
   -webkit-transition: all 0.3s;
   -o-transition: all 0.3s;

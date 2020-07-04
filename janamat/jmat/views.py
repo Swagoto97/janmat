@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from . models import *
 from django.contrib import messages
@@ -33,8 +33,12 @@ def user_credential(request):
 
 def chellenge_list_context():
     chellenge_list = Chellenge.objects.all()
+    comment_list = Comment.objects.all()
+
     context = {
         'chellenge_list':   chellenge_list,
+        'comment_list': comment_list,
+
     }
     return context
 
@@ -47,7 +51,8 @@ def home(request):
             selected_chellenge = Chellenge.objects.get(id=chellenge_id)
             topic_list = TopicList.objects.filter(Chellenge_id=chellenge_id)
             votes = Vote.objects.filter(Chellenge_id=chellenge_id)
-            comment_list = Comment.objects.filter(chellenge_id=chellenge_id)
+            comment_list = Comment.objects.all()
+            print(comment_list)
             try:
                 user = User.objects.get(username=request.session['username'])
                 is_votted = Vote.objects.get(
@@ -58,7 +63,7 @@ def home(request):
                 'chellenge_list':   Chellenge.objects.all(),
                 'selected_chellenge':   selected_chellenge,
                 'topic_list':   topic_list,
-                'comment_list':   comment_list,
+                'comment_list':   Comment.objects.all(),
                 'is_logged':   request.session.has_key('is_logged'),
                 'is_votted':   is_votted,
             }
@@ -177,6 +182,7 @@ def test(request):
 
 
 def pic_update(request):
+
     if request.method == 'GET':
 
         if request.session.has_key('is_logged'):
@@ -196,3 +202,28 @@ def pic_update(request):
         fs = FileSystemStorage()
         fs.save(pic.name, pic)
         return home(request)
+
+
+def postComment(request):
+    if request.method == 'POST':
+        comment = request.POST.get('comment')
+        user = request.user
+        postSno = request.POST.get('postSno')
+        post = Chellenge.objects.get(id=postSno)
+
+        com = Comment(user_id=user, message=comment, chellenge_id=post)
+        com.save()
+        messages.success(request, 'yor comment posted success fully')
+        # comme = Comment.objects.all()
+        # print(comme)
+
+    return redirect('/')
+
+
+def contact(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        mesg = request.POST['message']
+        con_us = contact_us(email=email, message=mesg)
+        con_us.save()
+    return redirect('/')
