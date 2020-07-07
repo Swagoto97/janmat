@@ -33,7 +33,7 @@ def user_credential(request):
 
 def chellenge_list_context():
     chellenge_list = Chellenge.objects.all()
-    comment_list = Comment.objects.all()
+    comment_list = Comment.objects.order_by('-date_comment')
 
     context = {
         'chellenge_list':   chellenge_list,

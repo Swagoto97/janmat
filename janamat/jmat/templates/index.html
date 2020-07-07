@@ -49,11 +49,11 @@
           ">
         Blog content
       </header>
-      <div class="p-4 pt-5">
+      <div class="p-4 pt-5" style="width: 200px;">
         <ul class="list-unstyled components mb-5">
           {% for chellenge in chellenge_list %}
-          <li class>
-            <a class="js-scroll-trigger" href="#{{chellenge}}">{{chellenge.chellengeName}}</a>
+          <li class="text-wrap">
+            <a class="  text-wrap js-scroll-trigger" href="#{{chellenge}}">{{chellenge.chellengeName}}</a>
           </li>
           {% endfor %}
         </ul>
@@ -226,10 +226,10 @@
           ">
 
         <h2 class="mb-4">{{chellenge}}</h2>
-        <p>
+        <p class="text-wrap">
           {{chellenge.chellengeDesc | safe}}
         </p>
-        <div class="container">
+        <div class="container-fluid">
           <h3 style="
           font-size: 1.5rem;
       ">Comments </h3>
@@ -253,18 +253,21 @@
         ">login to comment</h4>
           </div>
           {% endif %}
-          <div style="
-          height: 75%;
+          <div  class=" "style="
+          height: 30vmax;
+          width: 100%;
           overflow-y: scroll;
+          overflow-x: scroll;
+          
       ">
             {% for comments in comment_list %}
             {% if comments.chellenge_id == chellenge %}
-            <div class="row my-2 w-100">
-              <div class="col-md-1"><img src="{% static 'img/pi.jpg' %}" alt=""
-                  class=" img-fluid img-thumbnail rounded mx-auto d-block w-100 p-1 border border-dark" /></div>
-              <div class="col-md-11 border border-dark rounded"><b>{{comments.user_id}}</b> at <span
-                  class="badge badge-primary">{{comments.date_comment | naturaltime}}</span>
-                <div>{{comments.message}}</div>
+            <div class="row my-2 ">
+              <div class=" float-left  ml-3"><img src="{% static 'img/pi.jpg' %}" alt=""
+                  class=" img-fluid rounded  p-1 border d-inline-block border-dark" style="width: 50px !important; height: 50px;" /></div>
+              <div class=" float-right ml-2 text-wrap p-2 d-inline-block bg-white rounded"><b>{{comments.user_id}}</b> at <span
+                  class="badge badge-primary "style="border-color: transparent;">{{comments.date_comment | naturaltime}}</span>
+                <div class="text-wrap">{{comments.message}}</div>
               </div>
             </div>
             {% endif %}
@@ -272,36 +275,7 @@
           </div>
         </div>
 
-        {% comment %} <div class="container pb-cmnt-container">
-          <div class="row">
-            <div class="col-md-6 col-md-offset-3">
-              <div class="panel panel-info">
-                <div class="panel-body">
-                  <textarea placeholder="Write your comment here!" class="pb-cmnt-textarea"></textarea>
-                  <form class="form-inline">
-                    <div class="btn-group">
-                      <button class="btn" type="button">
-                        <span class="fa fa-picture-o fa-lg"></span>
-                      </button>
-                      <button class="btn" type="button">
-                        <span class="fa fa-video-camera fa-lg"></span>
-                      </button>
-                      <button class="btn" type="button">
-                        <span class="fa fa-microphone fa-lg"></span>
-                      </button>
-                      <button class="btn" type="button">
-                        <span class="fa fa-music fa-lg"></span>
-                      </button>
-                    </div>
-                    <button class="btn btn-primary pull-right" type="button">
-                      Share
-                    </button>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> {% endcomment %}
+        
       </section>
 
       {% endfor %}
