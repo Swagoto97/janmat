@@ -30,7 +30,7 @@ class UserProfile(models.Model):
 class Chellenge(models.Model):
 
     chellengeName = models.CharField(max_length=50, blank=False, null=False)
-    chellengeDesc = models.TextField(max_length=1000, blank=True, null=True)
+    chellengeDesc = models.TextField(max_length=10000, blank=True, null=True)
     # topiclist = models.ForeignKey(TopicList, on_delete=models.CASCADE)
 
     def __str__(self):

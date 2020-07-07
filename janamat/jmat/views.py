@@ -91,7 +91,7 @@ def signup(request):
         email = request.POST['email']
         password = request.POST['password']
         cpassword = request.POST['cpassword']
-        UserName = request.POST['username']
+        UserName = email
         UserName_qs = User.objects.filter(username=UserName)
         if UserName_qs.exists():
             messages.error(request, 'user already exiest')
