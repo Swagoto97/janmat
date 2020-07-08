@@ -121,20 +121,20 @@ def signin(request):
         else:
             return render(request, 'signin.html', context={})
     else:
-        print('In post method')
+        # print('In post method')
         username = request.POST['username']
         password = request.POST['password']
-        print(username, password)
+        # print(username, password)
         user = authenticate(username=username, password=password)
         if not user:
             messages.error(request, 'Please check your username and password')
-            return render(request, 'signIn.html', context={})
+            return render(request, 'signin.html', context={})
             # context = {"is_SigninFailed": "Sign in failed."}
         # if not user.check_password(password):
         #     messages.error(request, 'Please check password')
         #     return render(request, 'signIn.html', context={})
         else:
-            print(user)
+            # print(user)
             user.last_login = datetime.today()
             user.save()
             request.session['is_logged'] = True
@@ -194,8 +194,8 @@ def pic_update(request):
         user = User.objects.get(username=request.session['username'])
         userProfile = UserProfile.objects.get(
             user=User.objects.get(username=user))
-        print(user)
-        print(userProfile)
+        # print(user)
+        # print(userProfile)
 
         up = UserProfile(user=user, profile_image=pic)
         up.save()
