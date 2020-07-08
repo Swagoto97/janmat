@@ -16,10 +16,10 @@ def user_credential(request):
         firstName = user.first_name
         lastName = user.last_name
         profileImage = userProfile.profile_image
-        print(profileImage)
+        # print(profileImage)
         if profileImage == "":
             profileImage = "False"
-            print(profileImage)
+            # print(profileImage)
         user_context = {
             'user':   user,
             'userProfile':   userProfile,
@@ -46,29 +46,29 @@ def chellenge_list_context():
 def home(request):
     if request.method == 'GET':  # http://127.0.0.1:8000/
         context = chellenge_list_context()
-        if request.GET:  # http://127.0.0.1:8000/?chellenge_id=1
-            chellenge_id = request.GET['chellenge_id']
-            selected_chellenge = Chellenge.objects.get(id=chellenge_id)
-            topic_list = TopicList.objects.filter(Chellenge_id=chellenge_id)
-            votes = Vote.objects.filter(Chellenge_id=chellenge_id)
-            comment_list = Comment.objects.all()
-            print(comment_list)
-            try:
-                user = User.objects.get(username=request.session['username'])
-                is_votted = Vote.objects.get(
-                    User_id=user.id, Chellenge_id=chellenge_id).is_votted
-            except:
-                is_votted = False
-            context = {
-                'chellenge_list':   Chellenge.objects.all(),
-                'selected_chellenge':   selected_chellenge,
-                'topic_list':   topic_list,
-                'comment_list':   Comment.objects.all(),
-                'is_logged':   request.session.has_key('is_logged'),
-                'is_votted':   is_votted,
-            }
-            context.update(user_credential(request))
-            return render(request, 'index.html', context=context)
+        # if request.GET:  # http://127.0.0.1:8000/?chellenge_id=1
+        #     chellenge_id = request.GET['chellenge_id']
+        #     selected_chellenge = Chellenge.objects.get(id=chellenge_id)
+        #     topic_list = TopicList.objects.filter(Chellenge_id=chellenge_id)
+        #     votes = Vote.objects.filter(Chellenge_id=chellenge_id)
+        #     comment_list = Comment.objects.all()
+        #     print(comment_list)
+        #     try:
+        #         user = User.objects.get(username=request.session['username'])
+        #         is_votted = Vote.objects.get(
+        #             User_id=user.id, Chellenge_id=chellenge_id).is_votted
+        #     except:
+        #         is_votted = False
+        #     context = {
+        #         'chellenge_list':   Chellenge.objects.all(),
+        #         'selected_chellenge':   selected_chellenge,
+        #         'topic_list':   topic_list,
+        #         'comment_list':   Comment.objects.all(),
+        #         'is_logged':   request.session.has_key('is_logged'),
+        #         'is_votted':   is_votted,
+        #     }
+        #     context.update(user_credential(request))
+        #     return render(request, 'index.html', context=context)
         context.update(user_credential(request))
         return render(request, 'index.html', context=context)
     # Execute this block when user is have just login
@@ -140,8 +140,8 @@ def signin(request):
             request.session['is_logged'] = True
             request.session['username'] = username
             login(request, user)
-            print("Signin successfull and is_logged value is : {}".format(
-                request.session.has_key('is_logged')))
+            # print("Signin successfull and is_logged value is : {}".format(
+            #     request.session.has_key('is_logged')))
             return home(request)
         # else:
         #     if not user:
@@ -158,21 +158,21 @@ def signout(request):
     return home(request)
 
 
-def acceptVote(request):
-    if request.method == 'GET':
-        topic = TopicList.objects.get(id=request.GET['topic_id'])
-        user = User.objects.get(username=request.session['username'])
-        try:
-            vote = Vote.objects.get(
-                User_id=user.id, Chellenge_id=topic.Chellenge_id)
-            return HttpResponse('Votting already done '+str(vote.Topic))
-        except:
-            vote = Vote(Chellenge_id=topic.Chellenge_id,
-                        Topic_id=request.GET['topic_id'], User_id=user.id, is_votted=True)
-            vote.save()
-            TopicList.objects.filter(id=request.GET['topic_id']).update(
-                voteCount=F("voteCount") + 1)
-            return HttpResponse('Votting Done Successfully in : ' + str(vote.Topic))
+# def acceptVote(request):
+#     if request.method == 'GET':
+#         topic = TopicList.objects.get(id=request.GET['topic_id'])
+#         user = User.objects.get(username=request.session['username'])
+#         try:
+#             vote = Vote.objects.get(
+#                 User_id=user.id, Chellenge_id=topic.Chellenge_id)
+#             return HttpResponse('Votting already done '+str(vote.Topic))
+#         except:
+#             vote = Vote(Chellenge_id=topic.Chellenge_id,
+#                         Topic_id=request.GET['topic_id'], User_id=user.id, is_votted=True)
+#             vote.save()
+#             TopicList.objects.filter(id=request.GET['topic_id']).update(
+#                 voteCount=F("voteCount") + 1)
+#             return HttpResponse('Votting Done Successfully in : ' + str(vote.Topic))
 
 
 def test(request):

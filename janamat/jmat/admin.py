@@ -2,6 +2,11 @@ from django.contrib import admin
 from .models import *
 
 
+admin.site.site_title = "MySite Admin"
+admin.site.site_header = "Site Admin"
+admin.site.index_title = "Site content"
+
+
 class UserProfileAdmin(admin.ModelAdmin):
     list_display = ('user', 'profile_image', 'phone', 'dob', 'usr_type',)
 
@@ -16,11 +21,11 @@ class ChellengeAdmin(admin.ModelAdmin):
 admin.site.register(Chellenge, ChellengeAdmin)
 
 
-class TopicListAdmin(admin.ModelAdmin):
-    list_display = ('Chellenge', 'Topic', 'TopicDesc', 'voteCount')
+# class TopicListAdmin(admin.ModelAdmin):
+#     list_display = ('Chellenge', 'Topic', 'TopicDesc', 'voteCount')
 
 
-admin.site.register(TopicList, TopicListAdmin)
+# admin.site.register(TopicList, TopicListAdmin)
 
 
 class CommentAdmin(admin.ModelAdmin):
@@ -30,11 +35,11 @@ class CommentAdmin(admin.ModelAdmin):
 admin.site.register(Comment, CommentAdmin)
 
 
-class VoteAdmin(admin.ModelAdmin):
-    list_display = ('Chellenge', 'Topic', 'User', 'is_votted')
+# class VoteAdmin(admin.ModelAdmin):
+#     list_display = ('Chellenge', 'Topic', 'User', 'is_votted')
 
 
-admin.site.register(Vote, VoteAdmin)
+# admin.site.register(Vote, VoteAdmin)
 
 
 class contact_usAdmin(admin.ModelAdmin):

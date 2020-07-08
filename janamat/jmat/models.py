@@ -40,18 +40,18 @@ class Chellenge(models.Model):
         db_table = "Chellenge"
 
 
-class TopicList(models.Model):
-    # one too many or many to one relaton
-    Chellenge = models.ForeignKey(Chellenge, on_delete=models.CASCADE)
-    Topic = models.CharField(max_length=50, blank=False, null=False)
-    TopicDesc = models.TextField(max_length=1000, blank=True, null=True)
-    voteCount = models.IntegerField(default=0, null=False, blank=True)
+# class TopicList(models.Model):
+#     # one too many or many to one relaton
+#     Chellenge = models.ForeignKey(Chellenge, on_delete=models.CASCADE)
+#     Topic = models.CharField(max_length=50, blank=False, null=False)
+#     TopicDesc = models.TextField(max_length=1000, blank=True, null=True)
+#     voteCount = models.IntegerField(default=0, null=False, blank=True)
 
-    def __str__(self):
-        return str(self.Topic)+' :  '+self.TopicDesc
+#     def __str__(self):
+#         return str(self.Topic)+' :  '+self.TopicDesc
 
-    class Meta:
-        db_table = "TopicList"
+#     class Meta:
+#         db_table = "TopicList"
 
 
 class Comment(models.Model):
@@ -71,32 +71,32 @@ class Comment(models.Model):
         db_table = "Comment"
 
 
-class Vote(models.Model):
-    # id
-    Chellenge = models.ForeignKey(Chellenge, on_delete=models.CASCADE)
-    Topic = models.ForeignKey(TopicList, on_delete=models.CASCADE)
-    User = models.ForeignKey(User, on_delete=models.CASCADE)
-    is_votted = models.BooleanField(default=False)
+# class Vote(models.Model):
+#     # id
+#     Chellenge = models.ForeignKey(Chellenge, on_delete=models.CASCADE)
+#     Topic = models.ForeignKey(TopicList, on_delete=models.CASCADE)
+#     User = models.ForeignKey(User, on_delete=models.CASCADE)
+#     is_votted = models.BooleanField(default=False)
 
-    def __str__(self):
-        return str(self.User) + '    :   ' + str(self.Chellenge) + '    :   ' + str(self.Topic)
-        # return str(self.is_votted)
+#     def __str__(self):
+#         return str(self.User) + '    :   ' + str(self.Chellenge) + '    :   ' + str(self.Topic)
+#         # return str(self.is_votted)
 
-    class Meta:
-        db_table = "Vote"
-        unique_together = ('Chellenge', 'User',)
-        # verbose_name
+#     class Meta:
+#         db_table = "Vote"
+#         unique_together = ('Chellenge', 'User',)
+#         # verbose_name
 
 
-class testMOdel(models.Model):
-    # id
-    message = models.TextField('Message Field')
+# class testMOdel(models.Model):
+#     # id
+#     message = models.TextField('Message Field')
 
-    def __str__(self):
-        return self.message
+#     def __str__(self):
+#         return self.message
 
-    class Meta:
-        db_table = "Test_MOdel"
+#     class Meta:
+#         db_table = "Test_MOdel"
 
 
 class contact_us(models.Model):
